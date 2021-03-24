@@ -1,5 +1,7 @@
 
 
+// this will make query on basics array
+// like "take every cell that is <5 in [1,2,3,4,5,6,7,8,9]"
 class BasicQuery {
     constructor() {
         this.array;
@@ -23,15 +25,27 @@ class BasicQuery {
         return this;
     }
     orderAscendant() {
-        this.toReturn.sort((a, b) => {
-            return a - b;
-        });
+        if (typeof(this.toReturn[0]) == "number") {
+            this.toReturn.sort((a, b) => {
+                return a - b;
+            });
+        } else {
+            this.toReturn.sort((a, b) => {
+                return a.localeCompare(b);
+            });
+        }
         return this;
     }
     orderDescendant() {
-        this.toReturn.sort((a, b) => {
-            return b - a;
-        });
+        if (typeof(this.toReturn[0]) == "number") {
+            this.toReturn.sort((a, b) => {
+                return b - a;
+            });
+        } else {
+            this.toReturn.sort((a, b) => {
+                return b.localeCompare(a);
+            });
+        }
         return this;
     }
     get() {
@@ -39,6 +53,8 @@ class BasicQuery {
     }
 }
 
+// this will make query on array of object
+// like "take every object with the name that starts with an "A""
 class AdvancedQuery {
     constructor() {
         this.array;
@@ -97,7 +113,6 @@ class AdvancedQuery {
             this.toReturn.sort((a, b) => {
                 return a[value].localeCompare(b[value]);
             });
-
         }
 
         return this;
