@@ -2,8 +2,41 @@ const assert = require('assert');
 const query = require('../src/lib.js');
 
 describe("BasicQuery", () => {
-    it("Should work", () => {
-        
+    let input = [
+        1,
+        5,
+        8,
+        3,
+        9,
+        123,
+        512,
+        3.4,
+        5
+    ];
+    it("Should have the right length", () => {
+        let result = new query.BasicQuery().in(input)
+                                        .where(() => { return value < 10; })
+                                        .get();
+
+        assert.strictEqual(result.length, 7);
+    });
+
+    it("Should orders correctly", () => {
+        let outputAscendant = [1, 3, 3.4, 5, 5, 8, 9];
+        let resultAscendant = new query.BasicQuery().in(input)
+                                        .where(() => { return value < 10; })
+                                        .orderAscendant()
+                                        .get();
+        let outputDescendant = [9, 8, 5, 5, 3.4, 3, 1];
+        let resultDescendant = new query.BasicQuery().in(input)
+                                        .where(() => { return value < 10; })
+                                        .orderDescendant()
+                                        .get();
+
+        for (let i = 0; i < outputDescendant.length; i++) {
+            assert.strictEqual(resultAscendant[i], outputAscendant[i]);
+            assert.strictEqual(resultDescendant[i], outputDescendant[i]);
+        }
     });
 });
 

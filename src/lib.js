@@ -2,7 +2,40 @@
 
 class BasicQuery {
     constructor() {
+        this.array;
+        this.toReturn = [];
+    }
+    in(array) {
+        this.array = array;
+        return this;
+    }
+    where(lambda) {
+        for (let i = 0; i < this.array.length; i++) {
 
+            let value = this.array[i];
+
+            const lambdaParsed = eval(lambda.toString());
+
+            if (lambdaParsed()) {
+                this.toReturn.push(this.array[i]);
+            }
+        }
+        return this;
+    }
+    orderAscendant() {
+        this.toReturn.sort((a, b) => {
+            return a - b;
+        });
+        return this;
+    }
+    orderDescendant() {
+        this.toReturn.sort((a, b) => {
+            return b - a;
+        });
+        return this;
+    }
+    get() {
+        return this.toReturn;
     }
 }
 
